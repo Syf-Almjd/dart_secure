@@ -1,9 +1,10 @@
 library dart_secure;
 
 
-export 'src/inAppEncryption.dart' show inAppEncrypt, hashEncrypt;
-export 'src/inAppDecryption.dart' show inAppDecrypt;
-export 'src/biometricAuth.dart' show biometricAuth, AuthenticationStatus, BiometricAuthType;
-export 'src/userAuthMonitor.dart' show userAuthMonitor;
+export 'src/in_app_encryption.dart' show inAppEncrypt, hashEncrypt;
+export 'src/in_app_decryption.dart' show inAppDecrypt;
+export 'src/biometric_auth.dart' show biometricAuth, AuthenticationStatus, BiometricAuthType;
+export 'src/user_auth_monitor.dart' show userAuthMonitor;
+export 'src/temp_lock_user.dart' show tempLockUser;
 
 

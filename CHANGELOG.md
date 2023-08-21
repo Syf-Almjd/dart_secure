@@ -11,3 +11,5 @@
 ### Version 0.4.0
 - Included the feature of User Authentication Monitoring with examples for improved understanding and clarity.
 
+### Version 0.5.0
+- Included a new Temporary Lock User feature that can lock the user within the app for some amount of time.

@@ -1,6 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-//
 import 'package:dart_secure/dart_secure.dart';
+import 'package:flutter_test/flutter_test.dart';
 //
 // void main() {
 //   test('adds one to input values', () {
@@ -14,17 +13,15 @@ import 'package:dart_secure/dart_secure.dart';
 void main() {
   group('Auth', () {
     test('Auth', () {
-      return inAppEncrypt(text: "asdasdsad",key: "m.....");
-
+      return inAppEncrypt(text: "asdasdsad", key: "m.....");
     });
-
-    test('usermon', () {
-      // return userAuthMonitor(authenticatedUserPage: authenticatedUserPage, unAuthenticatedUserPage: unAuthenticatedUserPage);
-
-    });
+    // test('usermon', () async {
+    //   countdownPage(20, "asd");
+    //   await Future.delayed(Duration(seconds: 25)); // Adjust the delay as needed
+    // });
     test('deauth', () {
-      return inAppDecrypt(cipherText: "hbV+0c2GGultNzN0KFJ+Cg==",key: "m.....");
-
+      return inAppDecrypt(
+          cipherText: "hbV+0c2GGultNzN0KFJ+Cg==", key: "m.....");
     });
   });
 }

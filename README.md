@@ -2,6 +2,8 @@
 
 A Dart package that provides functionalities to enhance user authentication and data encryption in Dart applications. This package integrates multiple cybersecurity practices to secure sensitive user data and interactions. The package includes the following features:
 ## Features
+
+#### Temporary Lock User
 #### User Authentication Monitoring
 #### Biometric User Authentication
 #### InApp Data Encryption
@@ -157,6 +159,49 @@ The `InAppDecryption` feature lets you decrypt encrypted data within your app us
 String encryptedAddress = InAppDecryption(cipher: "######################", key: "MyUsersAddress");
 ```
 
+### Temporary Lock User 
+
+
+You can use the `tempLockUser` method to lock the user after multiple failed login attempts. This function takes the following parameters:
+
+- `context` (required): The `BuildContext` of the current screen.
+- `time` (optional): The duration in seconds for which the user will be locked. Default is 30 seconds.
+- `afterCountNavigateTo` (required): The widget to navigate to after the countdown timer finishes.
+- `lockedPageMessage` (optional): The message to display on the locked user page. Default is "You are temporarily locked."
+
+```dart
+Future<void> lockUser() async {
+  await tempLockUser(
+    context,
+    time: 60, // Lock user for 60 seconds
+    afterCountNavigateTo: HomeScreen(), // Navigate to HomeScreen after timer finishes
+    lockedPageMessage: "Your account has been temporarily locked for security reasons.",
+  );
+}
+```
+
+#### Customization
+
+You can customize the appearance of the countdown timer page by modifying the `_countdownPage` function. This function creates the UI displayed to the user during the lockout period.
+
+#### Note
+
+- The package uses a `StreamBuilder` to display the countdown timer and navigate to the next page once the timer completes.
+- The countdown timer can't be bypassed by pressing the back button.
+
+#### Example
+
+Here's a simple example of how to use the feature:
+
+```dart
+//Temporary lock the user
+void TempLockThisUser() {
+  // Simulate a failed login attempt
+  tempLockUser(context, afterCountNavigateTo: LoginPage());
+}
+```
+
+
 ## Release Notes
 
 ### Version 0.1.0
@@ -171,6 +216,8 @@ String encryptedAddress = InAppDecryption(cipher: "######################", key:
 ### Version 0.4.0
 - Added the feature of User Authentication Monitoring with examples for improved understanding and clarity.
 
+### Version 0.5.0
+- Included a new Temporary Lock User feature that can lock the user within the app for some amount of time.
 
 
 For more details and information about the package usage, refer to the [GitHub repository](https://github.com/Syf-Almjd/dart_secure).

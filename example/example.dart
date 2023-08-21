@@ -1,14 +1,24 @@
+import 'dart:ffi';
+
 import 'package:dart_secure/dart_secure.dart';
 import 'package:flutter/material.dart';
 
 
 void main() async {
-
+  //Example User Authentication Status
   //User Authentication Monitoring
   keepGettingAuthStatus();
 
+  //Example User get Biometric
   // Biometric User Authentication Example
   getBiometric();
+
+  //Example Lock the User
+  if (attempt>=3){
+    //Temporary lock current user
+    TempLockThisUser();
+  }
+
   // In-App Encryption Example
   var encryptedAddress = inAppEncrypt(text: "User's Address", key: "MyUsersAddress");
   print("Encrypted Address: $encryptedAddress");
@@ -23,7 +33,8 @@ void main() async {
 }
 
 
-
+//Example User Authentication Status
+//User Authentication Monitoring
 Widget keepGettingAuthStatus() {
   return Scaffold(
       body: userAuthMonitor(
@@ -39,6 +50,15 @@ Widget keepGettingAuthStatus() {
 
 
 
+  //Temporary lock the user
+  void TempLockThisUser() {
+    // Simulate a failed login attempt
+    tempLockUser(context, afterCountNavigateTo: LoginPage());
+  }
+
+
+//Example User get Biometric
+// Biometric User Authentication Example
 void getBiometric() async {
   var authStatus = await biometricAuth();
   if (authStatus == AuthenticationStatus.successful) {
@@ -47,3 +67,4 @@ void getBiometric() async {
     print("Authentication unsuccessful, try again");
   }
 }
+
