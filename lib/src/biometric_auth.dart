@@ -17,12 +17,11 @@ final LocalAuthentication auth = LocalAuthentication();
 
 Future<AuthenticationStatus> biometricAuth(
     {BiometricAuthType? biometricAuthType,
-      bool biometricOnly = false,
-      bool stickyAuth = false,
-      bool sensitiveTransaction = false,
-      bool userErrorDialogs = false,
-      String message = "Authentication"}) {
-
+    bool biometricOnly = false,
+    bool stickyAuth = false,
+    bool sensitiveTransaction = false,
+    bool userErrorDialogs = false,
+    String message = "Authentication"}) {
   if (biometricAuthType != null) {
     return _checkSpecificBioAuth(biometricAuthType, biometricOnly, stickyAuth,
         sensitiveTransaction, userErrorDialogs, message);
@@ -64,7 +63,7 @@ enum BiometricAuthType {
 Future<AuthenticationStatus> _checkBioAuth(userBiometricOnly, userStickyAuth,
     userSensitiveTransaction, userUserErrorDialogs, userMessage) async {
   final List<BiometricType> availableBiometrics =
-  await auth.getAvailableBiometrics();
+      await auth.getAvailableBiometrics();
   if (availableBiometrics.isNotEmpty) {
     try {
       bool didAuthenticate = await auth.authenticate(
@@ -74,7 +73,9 @@ Future<AuthenticationStatus> _checkBioAuth(userBiometricOnly, userStickyAuth,
               stickyAuth: userStickyAuth,
               sensitiveTransaction: userSensitiveTransaction,
               useErrorDialogs: userUserErrorDialogs));
-      return didAuthenticate? AuthenticationStatus.successful:AuthenticationStatus.failed;
+      return didAuthenticate
+          ? AuthenticationStatus.successful
+          : AuthenticationStatus.failed;
     } on PlatformException {
       return AuthenticationStatus.failed;
     }
@@ -90,7 +91,7 @@ Future<AuthenticationStatus> _checkSpecificBioAuth(
     userUserErrorDialogs,
     userMessage) async {
   final List<BiometricType> availableBiometrics =
-  await auth.getAvailableBiometrics();
+      await auth.getAvailableBiometrics();
   if (availableBiometrics
       .contains(BiometricType.values.byName(userSelection.name))) {
     try {
@@ -101,7 +102,9 @@ Future<AuthenticationStatus> _checkSpecificBioAuth(
               stickyAuth: userStickyAuth,
               sensitiveTransaction: userSensitiveTransaction,
               useErrorDialogs: userUserErrorDialogs));
-      return didAuthenticate? AuthenticationStatus.successful:AuthenticationStatus.failed;
+      return didAuthenticate
+          ? AuthenticationStatus.successful
+          : AuthenticationStatus.failed;
     } on PlatformException {
       return AuthenticationStatus.failed;
     }

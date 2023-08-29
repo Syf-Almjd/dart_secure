@@ -1,6 +1,6 @@
 name: dart_secure
 description: A Dart package that provides functionalities to enhance the security of Dart applications; integration of multiple cybersecurity practices to secure user interactions.
-version: 0.5.0
+version: 0.5.25
 homepage: https://github.com/Syf-Almjd/dart_secure
 
 environment:
@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   local_auth: ^2.1.6
   encrypt: ^5.0.1
-  firebase_auth: ^4.7.3
+  firebase_auth: ^4.8.0
   firebase_core: ^2.15.1
 
 dev_dependencies:
