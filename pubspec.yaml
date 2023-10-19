@@ -1,6 +1,6 @@
 name: dart_secure
 description: A Dart package that provides functionalities to enhance the security of Dart applications; integration of multiple cybersecurity practices to secure user interactions.
-version: 0.5.25
+version: 0.5.40
 homepage: https://github.com/Syf-Almjd/dart_secure
 
 environment:
