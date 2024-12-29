@@ -1,3 +1,7 @@
+### Version 0.6.0
+- Fixed hidden bugs.
+- Included a new symmetric encryption methods.
+
 ### Version 0.5.0
 - Included a new Temporary Lock User feature that can lock the user within the app for some amount of time.
 

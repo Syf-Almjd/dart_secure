@@ -1,40 +1,50 @@
+import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
+import 'dart:convert';
 
-///Input the text you want to encrypt and use a key that will be used for encryption, the key can be anything but you need later for decryption
-///
-/// Keep the key saved otherwise use hashEncrypt method
-inAppEncrypt({required Object text, required Object key}) =>
-    _inAppEncryption(text.toString(), key.toString());
+/// Encrypts the given [text] using the provided [key]. The [key] must be 32 characters or less.
+/// If the [key] is shorter than 32 characters, it will be padded with `#`.
+/// Returns a base64-encoded string of the encrypted text.
+String inAppEncrypt({required String text, required String key}) {
+  return _inAppEncryption(text, key);
+}
 
-///Cant be decrypted later
-///
-/// It is used to store and compare string in database
-hashEncrypt({required Object text, required Object keyIV}) =>
-    _hashEncryption(text.toString(), keyIV.toString());
+/// Encrypts the given [text] using the provided [keyIV] for Salsa20 encryption.
+/// Note: This is not a hashing method and is reversible.
+String symmetricEncrypt({required String text, required String keyIV}) {
+  return _symmetricEncryption(text, keyIV);
+}
 
-String _inAppEncryption(plainText, ptKey) {
+/// Hashes the given [plainText] with a salt ([keyIV]) using SHA-256.
+String hashEncrypt({required String plainText, required String keyIV}) {
+  return _hashEncryption(plainText, keyIV);
+}
+
+String _inAppEncryption(String plainText, String ptKey) {
   if (ptKey.length > 32) {
-    throw ArgumentError('Input must have a length of 32 or Less characters.');
+    throw ArgumentError('Key must be 32 characters or fewer.');
   }
-  while (ptKey.length < 32) {
-    ptKey = ptKey + "#";
-  }
+  ptKey = ptKey.padRight(32, '#');
   final keyBytes = Key.fromUtf8(ptKey);
-  final iv = IV.fromLength(16);
+  final iv = IV.fromSecureRandom(16); // Random IV for better security
   final encrypter = Encrypter(AES(keyBytes));
+  final encrypted = encrypter.encrypt(plainText, iv: iv);
+  return '${encrypted.base64}:${iv.base64}'; // Store IV with ciphertext
+}
+
+String _symmetricEncryption(String plainText, String keyIV) {
+  if (keyIV.length != 16) {
+    throw ArgumentError('keyIV must be exactly 16 characters.');
+  }
+  final key = Key.fromUtf8('wctdg4SXTIFvvGreJ91OQLkQRNqE99I6');
+  final iv = IV.fromUtf8(keyIV);
+  final encrypter = Encrypter(Salsa20(key));
   final encrypted = encrypter.encrypt(plainText, iv: iv);
   return encrypted.base64;
 }
 
-///Hashing a text to compare with database
 String _hashEncryption(String plainText, String keyIV) {
-  final key = Key.fromUtf8('wctdg4SXTIFvvGreJ91OQLkQRNqE99I6');
-  final iv = IV.fromUtf8(keyIV); // Use a fixed IV
-  final encrypter = Encrypter(Salsa20(key));
-
-  // Encrypt the plaintext using the fixed IV
-  final encrypted = encrypter.encrypt(plainText, iv: iv);
-
-  // Return the base64 representation of the encrypted text
-  return encrypted.base64;
+  final bytes = utf8.encode(plainText + keyIV); // Combine text with salt
+  final hashed = sha256.convert(bytes); // Hash the combination
+  return hashed.toString(); // Return hash as a hexadecimal string
 }

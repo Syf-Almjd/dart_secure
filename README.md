@@ -19,6 +19,7 @@ A Dart package that provides functionalities to enhance user authentication and 
 #### ✋ Biometric User Authentication
 #### 🔒 InApp Data Encryption
 #### 🔓 InApp Data Decryption
+#### 🔐 Symmetric Encryption & Decryption
 #### #️⃣ Hashing Data
 
 ##
@@ -251,6 +252,23 @@ String encryptedAddress = inAppEncrypt(text: "User's Address", key: "MyUsersAddr
 
 ##
 
+
+### 🔐 Symmetric Encryption
+
+The `symmetricEncrypt` method to securely encrypt sensitive data using a symmetric encryption key.:
+
+```dart
+Future<void> encryptUserData() async {
+  final encrypted = symmetricEncrypt(
+    plainText: 'Sensitive Information', // The text to encrypt
+    key: 'MySecureEncryptionKey123', // Encryption key
+  );
+
+  print('Encrypted Data: $encrypted');
+}
+```
+
+##
 ### #️⃣ Hash Encryption
 
 The `hashEncryption` feature securely hashes data, useful for scenarios like password storage:
@@ -267,6 +285,22 @@ The `InAppDecryption` feature lets you decrypt encrypted data within your app us
 
 ```dart
 String encryptedAddress = InAppDecryption(cipher: "######################", key: "MyUsersAddress");
+```
+##
+
+### 🔓 Symmetric Decryption
+
+The `symmetricDecryption` method to decrypt data encrypted with the symmetricEncrypt method:
+
+```dart
+Future<void> decryptUserData() async {
+  final decrypted = symmetricDecrypt(
+    cipherText: 'NjY4ODZ3ZGJka2NzODg=:YWJjZGVmZ2hpamtsbW5vcA==', // Encrypted text
+    key: 'MySecureEncryptionKey123', // Encryption key
+  );
+
+  print('Decrypted Data: $decrypted');
+}
 ```
 
 
@@ -288,13 +322,16 @@ String encryptedAddress = InAppDecryption(cipher: "######################", key:
 ### Version 0.5.0
 - Included a new Temporary Lock User feature that can lock the user within the app for some amount of time.
 
+### Version 0.5.0
+- Fixed hidden bugs.
+- Included a new symmetric encryption methods.
 
 For more details and information about the package usage, refer to the [GitHub repository](https://github.com/Syf-Almjd/dart_secure).
 
 If you encounter issues or have improvement suggestions, [open an issue](https://github.com/Syf-Almjd/dart_secure/issues) on GitHub.
 
 
-<h2 align="center">💙 Support DS Development 💙</h2>
+<h2 align="center">💙 Support Dart Security OS Development 💙</h2>
 
 [//]: # ([![PayPal]&#40;https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png&#41;]&#40;https://paypal.me/saifalmajdalmassri?country.x=MY&locale.x=en_US&#41;)
 
@@ -308,7 +345,7 @@ If you encounter issues or have improvement suggestions, [open an issue](https:/
 
 
 
-# <h1 align="center">👨‍💻 Framework Developer Profile 👨‍💻</h1>
+# <h2 align="center">👨‍💻 Framework Developer Profile 👨‍💻</h2>
 <h1 align="center">Hi 👋, I'm Saif Almajd</h1>
 <p align="center"> <img src="https://komarev.com/ghpvc/?username=syf-almjd&label=Profile%20views&color=0eb48b" alt="syf-almjd" /> </p>
 <h3 align="center">Passionate of Full Stack Mobile/Web Development</h3>
@@ -331,7 +368,7 @@ If you encounter issues or have improvement suggestions, [open an issue](https:/
 
 - 🔭 I’m currently working on a [Dart Secure Security Framework](https://github.com/Syf-Almjd/dart_secure)
 
-- 🌱 I’m currently learning **Flutter, SQL, Firebase, Dart**
+- 🌱 I’m currently learning **Springboot, Dart Servers**
 
 - 👨‍💻 All of my projects are available at [SaifAlmajd.web.app/](https://saifalmajd.web.app/)
 
@@ -344,19 +381,6 @@ If you encounter issues or have improvement suggestions, [open an issue](https:/
 <h1></h1>
 
 <p></p>
-
-
-<p align="center"> <img src="https://github-readme-streak-stats.herokuapp.com/?user=syf-almjd" alt="syf-almjd" /></img></p>
-
-
-
-
-<h3 align="center">Languages and Tools:</h3>
-<p align="center"> <a href="https://developer.android.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/> </a> <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a> <a href="https://www.figma.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> <a href="https://cloud.google.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://laravel.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/laravel/laravel-plain-wordmark.svg" alt="laravel" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> </p>
-
-
-<p align="center"> <img src="[https://github-readme-streak-stats.herokuapp.com/?user=syf-almjd](https://media.licdn.com/dms/image/D5635AQG_czOsY1xenQ/profile-framedphoto-shrink_400_400/0/1694776888586?e=1696064400&v=beta&t=Ot0LY7JidUcocyFE-Nz9Xjrmrb1wPCRUVIPP76rLd94)" alt="syf-almjd" /></img></p>
-
 
 I proudly embrace my roles as a Developer, Leader, and Believer in our shared journey toward a better humanity 🌎.
 
@@ -385,7 +409,7 @@ Let's join forces and shape technology into a more human-centric and empowering 
 
 <h3 align="center">Connect with Me:</h3>
 <p align="center">
-<a href="https://dev.to/https://dev.to/saifalmajd" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="https://dev.to/saifalmajd" height="30" width="40" /></a>
+<!-- <a href="https://dev.to/https://dev.to/saifalmajd" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="https://dev.to/saifalmajd" height="30" width="40" /></a> -->
 <a href="https://twitter.com/hsaifalmajd" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="hsaifalmajd" height="30" width="40" /></a>
 <a href="https://linkedin.com/in/saif-almajd" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="saif-almajd" height="30" width="40" /></a>
 <a href="https://stackoverflow.com/users/19370215" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="19370215" height="30" width="40" /></a>
