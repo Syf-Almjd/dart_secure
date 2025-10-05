@@ -21,6 +21,7 @@ A Dart package that provides functionalities to enhance user authentication and 
 #### 🔓 InApp Data Decryption
 #### 🔐 Symmetric Encryption & Decryption
 #### #️⃣ Hashing Data
+#### ✅ Client Validation
 
 ##
 # 📖 Getting Started
@@ -300,6 +301,60 @@ Future<void> decryptUserData() async {
   );
 
   print('Decrypted Data: $decrypted');
+}
+```
+
+## ✅ Client Validation
+
+The `ClientValidator` class provides a method to validate clients against a backend server and includes a UI page to inform users if the server is down.
+
+#### Usage
+
+To use the client validation feature:
+
+1.  **Set the Backend Base URL**: Before calling `validateClient`, configure your backend's base URL using `ClientValidator.setBackendBaseUrl()`. The client ID will be appended to this URL.
+
+    ```dart
+    import 'package:dart_secure/src/vaildate_client.dart';
+
+    // In your app's initialization (e.g., main() or initState of your main widget)
+    ClientValidator.setBackendBaseUrl('https://vapp.alaqsa.tech/validate-app/');
+    ```
+
+2.  **Validate the Client**: Call `ClientValidator.validateClient()` with the client's ID.
+
+    ```dart
+    import 'package:dart_secure/src/vaildate_client.dart';
+
+    Future<void> checkClientValidation(String clientId) async {
+      bool isValid = await ClientValidator.validateClient(clientId);
+
+      if (isValid) {
+        // Client is valid, or server is unreachable/error.
+        // You might need more sophisticated error handling in validateClient
+        // to distinguish between 'server returned true' and 'server error'.
+        print('Client $clientId is valid or server is down/error.');
+      } else {
+        // Client is explicitly not valid (server returned false).
+        print('Client $clientId is not valid. App access blocked.');
+        // Navigate to an unauthorized access page or block app usage.
+      }
+    }
+    ```
+
+#### Server Down Page
+
+The package also includes a `ServerDownPage` widget (`lib/src/server_down_page.dart`) that you can use to display a user-friendly message when your application cannot reach the backend server.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:dart_secure/src/server_down_page.dart';
+
+// Example of navigating to the ServerDownPage
+void navigateToServerDown(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(builder: (context) => const ServerDownPage()),
+  );
 }
 ```
 
