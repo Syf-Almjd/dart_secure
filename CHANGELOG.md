@@ -1,4 +1,4 @@
-### Version 0.6.5
+### Version 0.6.0
 - Added `ClientValidator` class for backend client validation, including configurable base URL and `clientId` in URL path.
 - Introduced `ServerDownPage` UI widget to inform users when the app server is down.
 

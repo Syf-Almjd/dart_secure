@@ -5,7 +5,7 @@ import 'dart:convert';
 class ClientValidator {
   /// The default base backend server URL for client validation.
   /// This can be overridden using [setBackendBaseUrl].
-  static String _backendBaseUrl = 'https://vapp.alaqsa.tech/validate-app/';
+  static String _backendBaseUrl = 'https://vapp.alaqsa.tech/api/validate-app/';
 
   /// Sets the base backend server URL for client validation.
   ///
@@ -31,7 +31,7 @@ class ClientValidator {
   static Future<bool> validateClient(String clientId) async {
     try {
       final validationUrl = Uri.parse('$_backendBaseUrl$clientId');
-      final response = await http.get(validationUrl);
+      final response = await http.post(validationUrl);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
