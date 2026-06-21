@@ -50,7 +50,7 @@ class _CountdownPageState extends State<_CountdownPage> {
             stream: _countdownStream(widget.time),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data == -1) {
+                if (snapshot.data == 0) {
                   if (!_navigated) {
                     _navigated = true;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -81,10 +81,10 @@ class _CountdownPageState extends State<_CountdownPage> {
 
 Stream<int> _countdownStream(int time) async* {
   var counter = time;
+  yield counter;
   while (counter > 0) {
     await Future.delayed(const Duration(seconds: 1));
-    yield counter;
     counter--;
+    yield counter;
   }
-  yield -1;
 }

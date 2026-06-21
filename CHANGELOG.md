@@ -1,3 +1,11 @@
+## 2.0.0
+- Upgraded package dependencies to latest major versions (`local_auth ^3.0.1`, `firebase_auth ^6.5.3`, `firebase_core ^4.11.0`, `crypto ^3.0.7`).
+- Updated minimum SDK requirements to Dart 3.7.0 and Flutter 3.29.0.
+- Fixed `symmetricEncrypt` and `symmetricDecryption` mismatch by implementing Salsa20 decryption.
+- Optimized countdown timer stream in `tempLockUser` to remove the initial 1-second delay.
+- Fixed typo in validation client filename (`validate_client.dart`) and implementation, and exported it from the main entry point.
+- Exposed `CheckFirebaseAuthentication` public widget and fixed missing type annotations.
+
 ## 1.5.0
 - Fixed missing type annotations in `biometric_auth.dart` private helper functions.
 - Replaced deprecated `WillPopScope` with `PopScope` in `temp_lock_user.dart`.

@@ -18,13 +18,13 @@ class ClientValidator {
 
   /// Validates a client by sending a request to a backend server.
   ///
-  /// This method sends a GET request to the configured backend base URL with the client's ID
+  /// This method sends a POST request to the configured backend base URL with the client's ID
   /// appended as a path segment (e.g., `https://your-backend-server.com/validate-app/clientId`).
   /// It returns `true` if:
-  /// 1. The server responds with a 200 OK status and the response body is 'true'.
+  /// 1. The server responds with a 200 OK status and the response body's validity key is `true`.
   /// 2. Any error occurs during the request (e.g., network error, non-200 status code).
   ///
-  /// It returns `false` if the server responds with a 200 OK status but the response body is not 'true'.
+  /// It returns `false` if the server responds with a 200 OK status but the response body's validity key is `false`.
   ///
   /// [clientId] The unique identifier of the client to validate.
   /// Returns a `Future<bool>` indicating whether the client is considered valid
@@ -36,13 +36,15 @@ class ClientValidator {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        final bool isAppValid = responseData['isAppVaild'] ??
+        // Accept both correct spelling "isAppValid" and legacy typo "isAppVaild"
+        final bool isAppValid = responseData['isAppValid'] ??
+            responseData['isAppVaild'] ??
             true; // Default to true if key is missing
 
         if (isAppValid) {
           return true;
         } else {
-          // Server responded with 200, and 'isAppVaild' is false.
+          // Server responded with 200, and validity key is false.
           return false;
         }
       } else {

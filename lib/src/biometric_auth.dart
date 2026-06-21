@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
 final LocalAuthentication auth = LocalAuthentication();
@@ -15,21 +14,30 @@ final LocalAuthentication auth = LocalAuthentication();
 ///                           }
 ///
 
-Future<AuthenticationStatus> biometricAuth(
-    {BiometricAuthType? biometricAuthType,
-    bool biometricOnly = false,
-    bool stickyAuth = false,
-    bool sensitiveTransaction = false,
-    bool userErrorDialogs = false,
-    String message = "Authentication"}) {
+Future<AuthenticationStatus> biometricAuth({
+  BiometricAuthType? biometricAuthType,
+  bool biometricOnly = false,
+  bool stickyAuth = false,
+  bool sensitiveTransaction = false,
+  @Deprecated('This option is no longer supported by local_auth 3.0.0 and will be ignored.')
+  bool userErrorDialogs = false,
+  String message = "Authentication",
+}) {
   if (biometricAuthType != null) {
-    return _checkSpecificBioAuth(biometricAuthType, biometricOnly, stickyAuth,
-        sensitiveTransaction, userErrorDialogs, message);
+    return _checkSpecificBioAuth(
+      biometricAuthType,
+      biometricOnly,
+      stickyAuth,
+      sensitiveTransaction,
+      message,
+    );
   }
-  {
-    return _checkBioAuth(biometricOnly, stickyAuth, sensitiveTransaction,
-        userErrorDialogs, message);
-  }
+  return _checkBioAuth(
+    biometricOnly,
+    stickyAuth,
+    sensitiveTransaction,
+    message,
+  );
 }
 
 enum AuthenticationStatus {
@@ -61,26 +69,25 @@ enum BiometricAuthType {
 }
 
 Future<AuthenticationStatus> _checkBioAuth(
-    bool userBiometricOnly,
-    bool userStickyAuth,
-    bool userSensitiveTransaction,
-    bool userUserErrorDialogs,
-    String userMessage) async {
+  bool userBiometricOnly,
+  bool userStickyAuth,
+  bool userSensitiveTransaction,
+  String userMessage,
+) async {
   final List<BiometricType> availableBiometrics =
       await auth.getAvailableBiometrics();
   if (availableBiometrics.isNotEmpty) {
     try {
-      bool didAuthenticate = await auth.authenticate(
-          localizedReason: userMessage,
-          options: AuthenticationOptions(
-              biometricOnly: userBiometricOnly,
-              stickyAuth: userStickyAuth,
-              sensitiveTransaction: userSensitiveTransaction,
-              useErrorDialogs: userUserErrorDialogs));
+      final bool didAuthenticate = await auth.authenticate(
+        localizedReason: userMessage,
+        biometricOnly: userBiometricOnly,
+        persistAcrossBackgrounding: userStickyAuth,
+        sensitiveTransaction: userSensitiveTransaction,
+      );
       return didAuthenticate
           ? AuthenticationStatus.successful
           : AuthenticationStatus.failed;
-    } on PlatformException {
+    } catch (e) {
       return AuthenticationStatus.failed;
     }
   }
@@ -88,28 +95,27 @@ Future<AuthenticationStatus> _checkBioAuth(
 }
 
 Future<AuthenticationStatus> _checkSpecificBioAuth(
-    BiometricAuthType userSelection,
-    bool userBiometricOnly,
-    bool userStickyAuth,
-    bool userSensitiveTransaction,
-    bool userUserErrorDialogs,
-    String userMessage) async {
+  BiometricAuthType userSelection,
+  bool userBiometricOnly,
+  bool userStickyAuth,
+  bool userSensitiveTransaction,
+  String userMessage,
+) async {
   final List<BiometricType> availableBiometrics =
       await auth.getAvailableBiometrics();
   if (availableBiometrics
       .contains(BiometricType.values.byName(userSelection.name))) {
     try {
       final bool didAuthenticate = await auth.authenticate(
-          localizedReason: userMessage,
-          options: AuthenticationOptions(
-              biometricOnly: userBiometricOnly,
-              stickyAuth: userStickyAuth,
-              sensitiveTransaction: userSensitiveTransaction,
-              useErrorDialogs: userUserErrorDialogs));
+        localizedReason: userMessage,
+        biometricOnly: userBiometricOnly,
+        persistAcrossBackgrounding: userStickyAuth,
+        sensitiveTransaction: userSensitiveTransaction,
+      );
       return didAuthenticate
           ? AuthenticationStatus.successful
           : AuthenticationStatus.failed;
-    } on PlatformException {
+    } catch (e) {
       return AuthenticationStatus.failed;
     }
   }

@@ -37,7 +37,7 @@ String _symmetricEncryption(String plainText, String keyIV) {
     throw ArgumentError('keyIV must be exactly 16 characters.');
   }
   final key = Key.fromUtf8('wctdg4SXTIFvvGreJ91OQLkQRNqE99I6');
-  final iv = IV.fromUtf8(keyIV);
+  final iv = IV.fromUtf8(keyIV.substring(0, 8)); // Salsa20 requires an 8-byte IV
   final encrypter = Encrypter(Salsa20(key));
   final encrypted = encrypter.encrypt(plainText, iv: iv);
   return encrypted.base64;

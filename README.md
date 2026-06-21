@@ -314,7 +314,7 @@ To use the client validation feature:
 1.  **Set the Backend Base URL**: Before calling `validateClient`, configure your backend's base URL using `ClientValidator.setBackendBaseUrl()`. The client ID will be appended to this URL.
 
     ```dart
-    import 'package:dart_secure/src/vaildate_client.dart';
+    import 'package:dart_secure/dart_secure.dart';
 
     // In your app's initialization (e.g., main() or initState of your main widget)
     ClientValidator.setBackendBaseUrl('https://vapp.alaqsa.tech/validate-app/');
@@ -323,7 +323,7 @@ To use the client validation feature:
 2.  **Validate the Client**: Call `ClientValidator.validateClient()` with the client's ID.
 
     ```dart
-    import 'package:dart_secure/src/vaildate_client.dart';
+    import 'package:dart_secure/dart_secure.dart';
 
     Future<void> checkClientValidation(String clientId) async {
       bool isValid = await ClientValidator.validateClient(clientId);
@@ -360,6 +360,14 @@ void navigateToServerDown(BuildContext context) {
 
 
 ## Release Notes
+
+### Version 2.0.0
+- Upgraded package dependencies to latest major versions (`local_auth ^3.0.1`, `firebase_auth ^6.5.3`, `firebase_core ^4.11.0`, `crypto ^3.0.7`).
+- Updated minimum SDK requirements to Dart 3.7.0 and Flutter 3.29.0.
+- Fixed `symmetricEncrypt` and `symmetricDecryption` mismatch by implementing Salsa20 decryption.
+- Optimized countdown timer stream in `tempLockUser` to remove the initial 1-second delay.
+- Fixed typo in validation client filename (`validate_client.dart`) and implementation, and exported it from the main entry point.
+- Exposed `CheckFirebaseAuthentication` public widget and fixed missing type annotations.
 
 ### Version 0.6.6
 - Fixed missing type annotations, replaced deprecated `WillPopScope` with `PopScope`.
