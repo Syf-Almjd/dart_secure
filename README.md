@@ -410,7 +410,7 @@ This project is open-source software licensed under the [MIT License](LICENSE.md
 ---
 
 
-<h2 align="center">💙 Support the Development of the Dart Secure Project 💙</h2>
+<h4 align="center">💙 Support the Development of the Dart Secure Project 💙</h4>
 
 <div align="center">
 
