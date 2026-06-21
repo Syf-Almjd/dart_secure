@@ -256,26 +256,27 @@ String encryptedAddress = inAppEncrypt(text: "User's Address", key: "MyUsersAddr
 
 ### 🔐 Symmetric Encryption
 
-The `symmetricEncrypt` method to securely encrypt sensitive data using a symmetric encryption key.:
+Use the `symmetricEncrypt` method to securely encrypt sensitive data using a 16-character symmetric key:
 
 ```dart
-Future<void> encryptUserData() async {
-  final encrypted = symmetricEncrypt(
-    plainText: 'Sensitive Information', // The text to encrypt
-    key: 'MySecureEncryptionKey123', // Encryption key
-  );
+final encrypted = symmetricEncrypt(
+  text: 'Sensitive Information', // The text to encrypt
+  keyIV: '1234567890123456',     // Exactly 16-character key
+);
 
-  print('Encrypted Data: $encrypted');
-}
+print('Encrypted Data: $encrypted');
 ```
 
 ##
 ### #️⃣ Hash Encryption
 
-The `hashEncryption` feature securely hashes data, useful for scenarios like password storage:
+The `hashEncrypt` feature securely hashes data with a salt, useful for scenarios like password storage:
 
 ```dart
-String encryptedAddress = hashEncrypt(text: "User's Address");
+String hashedAddress = hashEncrypt(
+  plainText: "User's Address",
+  keyIV: "MySaltKey1234567", // Salt value
+);
 ```
 
 ##
@@ -291,17 +292,15 @@ String encryptedAddress = InAppDecryption(cipher: "######################", key:
 
 ### 🔓 Symmetric Decryption
 
-The `symmetricDecryption` method to decrypt data encrypted with the symmetricEncrypt method:
+Use the `symmetricDecryption` method to decrypt data encrypted with `symmetricEncrypt`:
 
 ```dart
-Future<void> decryptUserData() async {
-  final decrypted = symmetricDecrypt(
-    cipherText: 'NjY4ODZ3ZGJka2NzODg=:YWJjZGVmZ2hpamtsbW5vcA==', // Encrypted text
-    key: 'MySecureEncryptionKey123', // Encryption key
-  );
+final decrypted = symmetricDecryption(
+  cipherText: 'NjY4ODZ3ZGJka2NzODg=', // Encrypted text
+  key: '1234567890123456',             // Same 16-character key used to encrypt
+);
 
-  print('Decrypted Data: $decrypted');
-}
+print('Decrypted Data: $decrypted');
 ```
 
 ## ✅ Client Validation
@@ -344,11 +343,11 @@ To use the client validation feature:
 
 #### Server Down Page
 
-The package also includes a `ServerDownPage` widget (`lib/src/server_down_page.dart`) that you can use to display a user-friendly message when your application cannot reach the backend server.
+The package also includes a `ServerDownPage` widget that you can use to display a user-friendly message when your application cannot reach the backend server.
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:dart_secure/src/server_down_page.dart';
+import 'package:dart_secure/ui/server_down_page.dart';
 
 // Example of navigating to the ServerDownPage
 void navigateToServerDown(BuildContext context) {
@@ -362,24 +361,31 @@ void navigateToServerDown(BuildContext context) {
 
 ## Release Notes
 
-### Version 0.1.0
-- Initial release of the Dart Secure framework, providing seamless integration of various cybersecurity practices.
+### Version 0.6.6
+- Fixed missing type annotations, replaced deprecated `WillPopScope` with `PopScope`.
+- Fixed all example code errors and updated dependency constraints.
 
-### Version 0.2.0
-- Enhanced Biometric documentation, ensuring comprehensive coverage and clarity.
+### Version 0.6.5
+- Fixed hidden bugs.
+- Included new symmetric encryption and decryption methods.
+
+### Version 0.6.0
+- Added `ClientValidator` class and `ServerDownPage` UI widget.
+
+### Version 0.5.0
+- Included a new Temporary Lock User feature.
+
+### Version 0.4.0
+- Added User Authentication Monitoring with examples.
 
 ### Version 0.3.0
 - Added illustrative examples for improved understanding and clarity.
 
-### Version 0.4.0
-- Added the feature of User Authentication Monitoring with examples for improved understanding and clarity.
+### Version 0.2.0
+- Enhanced Biometric documentation.
 
-### Version 0.5.0
-- Included a new Temporary Lock User feature that can lock the user within the app for some amount of time.
-
-### Version 0.5.0
-- Fixed hidden bugs.
-- Included a new symmetric encryption methods.
+### Version 0.1.0
+- Initial release of the Dart Secure framework.
 
 For more details and information about the package usage, refer to the [GitHub repository](https://github.com/Syf-Almjd/dart_secure).
 

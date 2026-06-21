@@ -60,8 +60,12 @@ enum BiometricAuthType {
   weak,
 }
 
-Future<AuthenticationStatus> _checkBioAuth(userBiometricOnly, userStickyAuth,
-    userSensitiveTransaction, userUserErrorDialogs, userMessage) async {
+Future<AuthenticationStatus> _checkBioAuth(
+    bool userBiometricOnly,
+    bool userStickyAuth,
+    bool userSensitiveTransaction,
+    bool userUserErrorDialogs,
+    String userMessage) async {
   final List<BiometricType> availableBiometrics =
       await auth.getAvailableBiometrics();
   if (availableBiometrics.isNotEmpty) {
@@ -85,11 +89,11 @@ Future<AuthenticationStatus> _checkBioAuth(userBiometricOnly, userStickyAuth,
 
 Future<AuthenticationStatus> _checkSpecificBioAuth(
     BiometricAuthType userSelection,
-    userBiometricOnly,
-    userStickyAuth,
-    userSensitiveTransaction,
-    userUserErrorDialogs,
-    userMessage) async {
+    bool userBiometricOnly,
+    bool userStickyAuth,
+    bool userSensitiveTransaction,
+    bool userUserErrorDialogs,
+    String userMessage) async {
   final List<BiometricType> availableBiometrics =
       await auth.getAvailableBiometrics();
   if (availableBiometrics

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -46,12 +47,12 @@ class ClientValidator {
         }
       } else {
         // Server returned a non-200 status code, treat as an error.
-        print('Server error: ${response.statusCode} - ${response.body}');
+        debugPrint('Server error: ${response.statusCode} - ${response.body}');
         return true; // As per requirement: if server has error, method returns true.
       }
     } catch (e) {
       // Network error or any other exception during the request.
-      print('Error validating client: $e');
+      debugPrint('Error validating client: $e');
       return true; // As per requirement: if server has error, method returns true.
     }
   }

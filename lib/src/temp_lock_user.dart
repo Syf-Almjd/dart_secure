@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ///You can use this for locking down the user after multiple login attempt to prevent against DOS and BruteForce
-Future<Widget> tempLockUser(BuildContext context,
+Future<void> tempLockUser(BuildContext context,
 
     ///Time in seconds
     {int time = 30,
@@ -11,32 +11,60 @@ Future<Widget> tempLockUser(BuildContext context,
 
     ///The message you want to display in the locked user page;
     String lockedPageMessage = "You are temporary locked"}) async {
-  return await Navigator.pushReplacement(
+  await Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (BuildContext context) =>
-          _countdownPage(time, lockedPageMessage, afterCountNavigateTo),
+      builder: (BuildContext ctx) => _CountdownPage(
+          time: time,
+          message: lockedPageMessage,
+          nextPage: afterCountNavigateTo),
     ),
-  ); // Return a placeholder widget for now
+  );
 }
 
-Widget _countdownPage(int time, String message, nextPage) {
-  return MaterialApp(
-    home: WillPopScope(
-      onWillPop: () async => false,
+class _CountdownPage extends StatefulWidget {
+  final int time;
+  final String message;
+  final Widget nextPage;
+
+  const _CountdownPage({
+    required this.time,
+    required this.message,
+    required this.nextPage,
+  });
+
+  @override
+  State<_CountdownPage> createState() => _CountdownPageState();
+}
+
+class _CountdownPageState extends State<_CountdownPage> {
+  bool _navigated = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: Center(
           child: StreamBuilder<int>(
-            stream: _countdownStream(time),
+            stream: _countdownStream(widget.time),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data == -1) {
-                  return nextPage;
+                  if (!_navigated) {
+                    _navigated = true;
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (_) => widget.nextPage),
+                      );
+                    });
+                  }
+                  return const CircularProgressIndicator();
                 }
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(message),
+                    Text(widget.message),
                     Text(snapshot.data.toString()),
                   ],
                 );
@@ -47,8 +75,8 @@ Widget _countdownPage(int time, String message, nextPage) {
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Stream<int> _countdownStream(int time) async* {
